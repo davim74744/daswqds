@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import PixDisplay from './PixDisplay';
 import CreditCardForm from './CreditCardForm';
-import { CreditCardDetails, FormData } from '../types';
+import { FormData } from '../types';
 import { generatePix } from '../services/paymentService';
 import PixIcon from './icons/PixIcon';
 import CreditCardIcon from './icons/CreditCardIcon';
-import ThreeDSecure from './ThreeDSecure';
 
 interface PaymentProps {
   formData: FormData;
@@ -13,19 +12,11 @@ interface PaymentProps {
   isActive: boolean;
 }
 
-interface ThreeDSecureData {
-    tokenCard: string;
-    cardDetails: CreditCardDetails;
-    amount: number;
-}
-
 const Payment: React.FC<PaymentProps> = ({ formData, onComplete, isActive }) => {
     const [selectedMethod, setSelectedMethod] = useState<'pix' | 'creditCard'>('pix');
     const [pixData, setPixData] = useState<{qrCode: string; copyPaste: string} | null>(null);
     const [isLoadingPix, setIsLoadingPix] = useState(false);
     const [error, setError] = useState('');
-    const [show3DSecure, setShow3DSecure] = useState(false);
-    const [threeDSecureData, setThreeDSecureData] = useState<ThreeDSecureData | null>(null);
 
     const handleGeneratePix = async () => {
         if (!formData.amount) return;
@@ -34,7 +25,6 @@ const Payment: React.FC<PaymentProps> = ({ formData, onComplete, isActive }) => 
         try {
             const data = await generatePix(formData.amount.value, formData.phone);
             setPixData(data);
-             // Simulate waiting for payment confirmation
              setTimeout(() => {
                 onComplete();
              }, 10000000); 
@@ -43,11 +33,6 @@ const Payment: React.FC<PaymentProps> = ({ formData, onComplete, isActive }) => 
              setIsLoadingPix(false);
         }
     };
-
-        const handleCreditCardSuccess = (tokenCard: string, amount: number, cardDetails: CreditCardDetails) => {
-        setThreeDSecureData({ tokenCard, cardDetails, amount });
-    setShow3DSecure(true);
-       };
 
     return (
         <>
@@ -59,7 +44,6 @@ const Payment: React.FC<PaymentProps> = ({ formData, onComplete, isActive }) => 
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4 mb-6">
-                        {/* Pix Option */}
                         <button
                             onClick={() => setSelectedMethod('pix')}
                             className={`
@@ -72,7 +56,6 @@ const Payment: React.FC<PaymentProps> = ({ formData, onComplete, isActive }) => 
                             <PixIcon className="h-8 w-8 mb-2 text-slate-800" />
                             <span className="text-sm font-semibold text-slate-800">Pix</span>
                         </button>
-                        {/* Credit Card Option */}
                          <button
                             onClick={() => setSelectedMethod('creditCard')}
                             className={`
@@ -98,7 +81,7 @@ const Payment: React.FC<PaymentProps> = ({ formData, onComplete, isActive }) => 
                        {selectedMethod === 'creditCard' && formData.amount && (
                            <CreditCardForm 
                                amount={formData.amount.value}
-                               onSuccess={handleCreditCardSuccess}
+                               onSuccess={(console.log('ok'))}
                            />
                        )}
                     </div>
@@ -106,14 +89,6 @@ const Payment: React.FC<PaymentProps> = ({ formData, onComplete, isActive }) => 
                 </div>
                  {!isActive && <div className="absolute inset-0 z-10 cursor-not-allowed rounded-2xl"></div>}
             </div>
-
-            {show3DSecure && threeDSecureData && (
-                <ThreeDSecure
-                    data={threeDSecureData}
-                    onClose={() => setShow3DSecure(false)}
-                    onComplete={onComplete}
-                />
-            )}
         </>
     );
 };

@@ -84,16 +84,6 @@ const Hero = () => {
                     <p className="mt-6 max-w-xl text-lg text-slate-600">
                         Complete sua recarga em segundos e aproveite os melhores bônus de internet para sua operadora.
                     </p>
-                    <div className="mt-10">
-                        <p className="font-semibold mb-4 text-slate-500">Pagamento seguro com nossos parceiros:</p>
-                        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 opacity-90 text-slate-600">
-                            <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" className="h-7" title="Visa" />
-                            <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" alt="Mastercard" className="h-7" title="Mastercard"/>
-                            <img src="https://img.icons8.com/color/48/000000/amex.png" alt="American Express" className="h-7" title="American Express" />
-                            <img src="https://img.icons8.com/officel/48/000000/discover.png" alt="Discover" className="h-7" title="Discover" />
-                            <img src="https://img.icons8.com/fluency/48/000000/pix.png" alt="Pix" className="h-6" title="Pix"/>
-                        </div>
-                    </div>
                 </div>
                 
                 {/* Right side graphic - iPHONE MOCKUP */}

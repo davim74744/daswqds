@@ -22,15 +22,3 @@ export interface FormData {
   phone: string;
   operator: Operator | null;
 }
-
-export interface ValidationRule {
-  minLength: number;
-  maxLength: number;
-  type: 'numeric' | 'alphanumeric';
-}
-
-export interface Issuer {
-  bins: number[];
-  rules: ValidationRule;
-  logo: string | null;
-}

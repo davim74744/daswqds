@@ -5,7 +5,6 @@ import { generateCardToken } from '../services/paymentService';
 
 interface CreditCardFormProps {
     amount: number;
-    onSuccess: (tokenCard: string, amount: number, cardDetails: CreditCardDetails) => void;
 }
 
 // Helper functions for validation
@@ -31,7 +30,7 @@ const getCardType = (number: string): 'amex' | 'other' => {
 };
 
 
-const CreditCardForm: React.FC<CreditCardFormProps> = ({ amount, onSuccess }) => {
+const CreditCardForm: React.FC<CreditCardFormProps> = ({ amount }) => {
     const [cardDetails, setCardDetails] = useState<CreditCardDetails>({
         number: '',
         name: '',
@@ -132,12 +131,10 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({ amount, onSuccess }) =>
         setIsLoading(true);
         
         try {
-            // Chama a nova função de tokenização com os dados brutos do cartão
             const tokenResponse = await generateCardToken(cardDetails);
             
                if (tokenResponse && tokenResponse.success && tokenResponse.tokenCard) {
              setIsLoading(false);
-             onSuccess(tokenResponse.tokenCard, amount, cardDetails);
             } else {
                 throw new Error("Resposta da API de tokenização inválida.");
             }

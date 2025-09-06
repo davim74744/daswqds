@@ -11,6 +11,10 @@ import { OPERATORS } from './constants';
 import FacebookIcon from './components/icons/FacebookIcon';
 import InstagramIcon from './components/icons/InstagramIcon';
 import TwitterIcon from './components/icons/TwitterIcon';
+import { WhyChooseUs } from './components/WhyChooseUs';
+import { Faq } from './components/Faq';
+import { CarrierFaq } from './components/CarrierFaq';
+import { Blog } from './components/Blog';
 
 const App: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -66,7 +70,7 @@ const App: React.FC = () => {
         <>
           <Hero />
           <main className="w-full flex-grow">
-            <div className="bg-white/60 backdrop-blur-xl border-y border-slate-200">
+            <div className="bg-gray-100 backdrop-blur-xl border-y border-slate-200">
               <div className="container mx-auto max-w-screen-2xl px-4 md:px-6 lg:px-8 py-8 sm:py-12">
                 <Stepper currentStep={currentStep} />
                 <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-10">
@@ -94,8 +98,14 @@ const App: React.FC = () => {
                       isActive={currentStep === 3}
                     />
                 </div>
+                
               </div>
+                          <WhyChooseUs />
+            <Faq />
+            <CarrierFaq />
+            <Blog />
             </div>
+            
           </main>
         </>
       )}
